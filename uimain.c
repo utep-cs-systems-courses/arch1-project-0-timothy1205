@@ -25,9 +25,36 @@ int main()
       print_square(5, 5);
       break;
     case 'c':
-      puts("You selected chars:");
-      for (char c = 'A'; c < 'D'; c++)
-	print_char_11x16(c);
+      fputs("Please enter a font:\n", stdout);
+      printf("\t%c) 11x16\n", FONT_11x16);
+      //printf("\t%c) 8x12\n", FONT_8x12); // Disabled due to 8x12 font having different orientation
+
+      printf("\t%c) 5x7\n", FONT_5x7);
+      fflush(stdout);	
+
+      while ((c = getchar()) == '\n'); /* ignore newlines */
+      if (c == EOF)		     /* terminate on end-of-file */
+        goto done;
+      
+      int failed = 0;
+      switch (c) {
+        case '0':
+          break;
+      //case '1':
+      //    break;
+      case '2':
+        break;
+      default:
+        failed = 1;
+      }
+
+      if (failed) {
+        printf("Unrecognized option '%c', please try again!\n", c);
+        break;
+      }
+
+      for (char letter = 'A'; letter < 'D'; letter++)
+      print_char(c, letter);
       break;
     case 'a':
       puts ("You selected arrow:");

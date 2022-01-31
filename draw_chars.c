@@ -31,28 +31,38 @@ void print_char(char font, char c)
   get_font_dimensions(font, &width, &height);
 
   c -= 0x20; // make character uppercase
-  for (char row = 0; row < width; row++) {
-    unsigned short rowBits;
-   
-    switch (font) {
-      case FONT_11x16:
-        rowBits = font_11x16[c][row];
-        break;
-      case FONT_8x12:
-        rowBits = font_8x12[c][row];
-        break;
-      case FONT_5x7:
-        rowBits = font_5x7[c][row];
-        break;
-      default:
-        printf("Unexpected value (%c), skipping...", font);
-    }
-
+  if (font == FONT_8x12) {
     for (char col = 0; col < height; col++) {
-      unsigned short colMask = 1 << (height-1-col); /* mask to select bit associated with bit */
-      putchar( (rowBits & colMask) ? '*' : ' ');
+      unsigned short colBits = font_8x12[c][col];
+
+      for (char row = 0; row < width; row++) {
+        unsigned short rowMask = 1 << (width-1-row);
+        putchar( (colBits & rowMask) ? '*' : ' ');
+      }
+      putchar('\n');
     }
-    putchar('\n');
+  } else {
+    for (char row = 0; row < width; row++) {
+      unsigned short rowBits;
+     
+      switch (font) {
+        case FONT_11x16:
+          rowBits = font_11x16[c][row];
+          break;
+        case FONT_5x7:
+          rowBits = font_5x7[c][row];
+          break;
+        default:
+          printf("Unexpected value (%c), skipping...", font);
+      }
+
+      for (char col = 0; col < height; col++) {
+        unsigned short colMask = 1 << (height-1-col); /* mask to select bit associated with bit */
+        putchar( (rowBits & colMask) ? '*' : ' ');
+      }
+      putchar('\n');
+    }
+  
   }
 }
 

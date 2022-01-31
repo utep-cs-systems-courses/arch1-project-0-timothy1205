@@ -27,7 +27,7 @@ int main()
     case 'c':
       fputs("Please enter a font:\n", stdout);
       printf("\t%c) 11x16\n", FONT_11x16);
-      //printf("\t%c) 8x12\n", FONT_8x12); // Disabled due to 8x12 font having different orientation
+      printf("\t%c) 8x12\n", FONT_8x12);
 
       printf("\t%c) 5x7\n", FONT_5x7);
       fflush(stdout);	
@@ -40,8 +40,8 @@ int main()
       switch (c) {
         case '0':
           break;
-      //case '1':
-      //    break;
+      case '1':
+          break;
       case '2':
         break;
       default:

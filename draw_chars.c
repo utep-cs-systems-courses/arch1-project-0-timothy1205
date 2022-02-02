@@ -41,28 +41,28 @@ void print_char(char font, char c)
       }
       putchar('\n');
     }
+    fputs("_________________\n", stdout);
   } else {
-    for (char row = 0; row < width; row++) {
-      unsigned short rowBits;
-     
-      switch (font) {
-        case FONT_11x16:
-          rowBits = font_11x16[c][row];
-          break;
-        case FONT_5x7:
-          rowBits = font_5x7[c][row];
-          break;
-        default:
-          printf("Unexpected value (%c), skipping...", font);
-      }
-
-      for (char col = 0; col < height; col++) {
+    for (char col = height - 1; col >= 0; col--) {
+      for (char row = 0; row < width; row++) {
+          unsigned short colBits;
+         
+          switch (font) {
+            case FONT_11x16:
+              colBits = font_11x16[c][row];
+              break;
+            case FONT_5x7:
+              colBits = font_5x7[c][row];
+              break;
+            default:
+              printf("Unexpected value (%c), skipping...", font);
+          }
         unsigned short colMask = 1 << (height-1-col); /* mask to select bit associated with bit */
-        putchar( (rowBits & colMask) ? '*' : ' ');
+        putchar( (colBits & colMask) ? '*' : ' ');
       }
       putchar('\n');
     }
-  
+    fputs("_________________\n", stdout);
   }
 }
 
